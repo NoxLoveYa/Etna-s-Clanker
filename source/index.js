@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const fs = require("node:fs");
 const path = require("node:path");
+
 const {
 	Client,
 	Collection,
@@ -14,6 +15,8 @@ const {
 } = require("discord.js");
 const { CLIENT_RENEG_LIMIT } = require("node:tls");
 const { channel } = require("node:diagnostics_channel");
+
+const log = require("./utils/log.js");
 
 // Create a new client instance
 const client = new Client({
@@ -40,9 +43,7 @@ for (const file of commandFiles) {
 	if ("data" in command && "execute" in command) {
 		client.commands.set(command.data.name, command);
 	} else {
-		console.log(
-			`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
-		);
+		log(`The command at ${filePath} is missing a required "data" or "execute" property.`, 'warning', true);
 	}
 }
 
@@ -61,13 +62,12 @@ for (const file of eventFiles) {
 			} else {
 				client.on(event.name, (...args) => event.execute(client, ...args));
 			}
-			console.log(`[EVENT] ${event.name} event loaded.`);
+			log(`${event.name} event loaded.`, 'event', true);
 		} else {
-			console.log(
-				`[WARNING] The event at ${filePath} is missing a required "name" or "execute" property.`
-			);
+			log(`The event at ${filePath} is missing a required "name" or "execute" property.`, 'warning', true);
 		}
 	}
 }
+log(`Bot is starting...`, 'info', true);
 
 client.login(process.env.TOKEN);
