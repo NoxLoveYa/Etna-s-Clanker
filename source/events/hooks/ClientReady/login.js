@@ -11,12 +11,12 @@ async function execute(client2, client) {
 
     const embed = new EmbedBuilder()
         .setTitle(`[LOGIN SUCCESSFUL]`)
-        .setColor(Colors.Blurple)
+        .setColor(Colors.Green)
         .setThumbnail(client?.user?.displayAvatarURL?.() ?? '')
         .setTimestamp();
 
     if (client && client.channels && client.channels.cache) {
-        const ch = client.channels.cache.get('1293121222875414539');
+        const ch = client.channels.cache.get(process.env.LOG_CHANNEL_ID);
         if (ch && ch.send) ch.send({ embeds: [embed] });
     }
 }

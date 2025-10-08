@@ -29,7 +29,7 @@ module.exports = {
         .setColor(Colors.Green)
         .setThumbnail(interaction.user.displayAvatarURL())
         .setTimestamp();
-        interaction.client.channels.cache.get('1105622124825170021').send({embeds: [log]})
+        interaction.client.channels.cache.get(process.env.LOG_CHANNEL_ID).send({embeds: [log]})
 	},
     perms: PermissionFlagsBits.ManageMessages,
 };
